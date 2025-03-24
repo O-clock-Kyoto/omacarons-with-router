@@ -1,54 +1,27 @@
-# React + TypeScript + Vite
+# O'Macarons
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Install du projet avec Vite
 
-Currently, two official plugins are available:
+allez voir les commandes sur la doc de Vite : https://vite.dev/guide/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-> faites git init !
+-> faites un commit 
+-> créez un repo sur github sur l'orga Samoussa (attention on ajoute bien son github dans le nom du repo)
+-> branchez le repo local avec le repo distant en copiant la commande qui ressemble à `git remote add origin @adressshdevotrerepo`
 
-## Expanding the ESLint configuration
+## Ménage et Supprimer eslint et ajouté biome
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+fiche recap biome
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## créer un composant App avec une stucture JSX 
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## afficher une liste d'elements JSX avec map 
+-> une liste de parfum de macarons : créé un liste d'element div
+-> on oublie pas la key
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## créer un state avec useState pour stocker le count
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+-> on importe bien useState
+-> on destructure le tableau qu'il renvoie
+-> on utilise la valeur dans le JXS pour l'affciher
+-> on modifie la valeur quand y'a un click avec le setter (jamais directement!!!)

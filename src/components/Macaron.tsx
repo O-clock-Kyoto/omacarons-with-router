@@ -17,7 +17,7 @@ interface IMacaronProps {
 
 // COMPOSANT
 function Macaron({ macaronToDisplay }: IMacaronProps) {
-  // on peut ajouter un state dans ce composant uniquement
+  // STATE local : utilisé dans ce composant uniquement
   const [like, setLike] = useState(0);
 
   // return le morceau de JSX qui dessine 1 macaron

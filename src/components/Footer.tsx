@@ -1,7 +1,23 @@
 import { useState } from 'react';
 
-function Footer({ nbMacarons }: { nbMacarons: number }) {
-  // STATE pour stokce rle compteur du footer
+// import de composants de la lib react-feather quon a installé avec la commande 'pnpm i react-feather'
+import { Moon, Sun } from 'react-feather';
+
+// import du style du composant Footer
+import './Footer.scss';
+
+// TYPAGE des props
+interface IFooterProps {
+  nbMacarons: number;
+  isDark: boolean;
+  // setDark est une fonction créé et renvoyée par useState, pour connaitre son type on passe la souris au dessus du nm de la fonction et on copie colle le type
+  setDark: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function Footer({ nbMacarons, isDark, setDark }: IFooterProps) {
+  // STATE pour stocker le compteur du footer
+  // c'est un etat local au composant footer
+  // si il est modifier il n'y a que footer qui refait son rendu
   const [count, setCount] = useState(60);
 
   // return juste le JSX du footer
@@ -43,6 +59,17 @@ function Footer({ nbMacarons }: { nbMacarons: number }) {
         reset
       </button>
       <p>{nbMacarons} macarons dispos</p>
+      <button
+        className="darkmode"
+        type="button"
+        onClick={() => {
+          // changer la valeur de isDark dans le state de App
+          // sauf que là on est dans Footer
+          setDark(!isDark);
+        }}
+      >
+        {isDark ? <Sun /> : <Moon />}
+      </button>
     </footer>
   );
 }

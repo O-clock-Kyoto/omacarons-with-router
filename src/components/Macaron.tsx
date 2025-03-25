@@ -2,7 +2,10 @@
 
 import { useState } from 'react';
 
-// TYPESCRIPT qui dit quelles sont les types de sprops de Macarons
+// import du style du composant macaron
+import './Macaron.scss';
+
+// TYPESCRIPT qui défini le type des props du composant Macaron
 interface IMacaronProps {
   // prop macaronToDisplay
   macaronToDisplay: { id: number; flavour: string; color: string };
@@ -14,7 +17,6 @@ function Macaron({ macaronToDisplay }: IMacaronProps) {
   const [like, setLike] = useState(0);
 
   // return le morceau de JSX qui dessine 1 macaron
-
   return (
     <div className="macaron">
       <button

@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 
 // notre composant principal APp est defini dan sun autre fichier on l'importe pour le filer à "render" (pas besoin d'ajouter les extension car notre super bundler n'en a pas besoin)
-import App from './App';
+import App from './components/App';
 
 // on ajoute le fichier SCSS à notre projet avec un import que notre bundler peut comprendre
 import './styles.scss';

@@ -2,7 +2,14 @@
 
 import { useState } from 'react';
 
-function Macaron({ macaronToDisplay }) {
+// TYPESCRIPT qui dit quelles sont les types de sprops de Macarons
+interface IMacaronProps {
+  // prop macaronToDisplay
+  macaronToDisplay: { id: number; flavour: string; color: string };
+}
+
+// COMPOSANT
+function Macaron({ macaronToDisplay }: IMacaronProps) {
   // on peut ajouter un state dans ce composant uniquement
   const [like, setLike] = useState(0);
 

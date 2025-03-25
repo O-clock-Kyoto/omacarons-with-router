@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function Footer({ nbMacarons }) {
+function Footer({ nbMacarons }: { nbMacarons: number }) {
   // STATE pour stokce rle compteur du footer
   const [count, setCount] = useState(60);
 

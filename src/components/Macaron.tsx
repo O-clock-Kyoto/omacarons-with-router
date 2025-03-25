@@ -2,13 +2,17 @@
 
 import { useState } from 'react';
 
+// import du custm type (interface) Macaron pour typer la prop macaronToDisplay
+// on importe pas une valeur mais juste un type donc on met 'type' derriere import
+import type IMacaron from '../@types/macaron';
+
 // import du style du composant macaron
 import './Macaron.scss';
 
 // TYPESCRIPT qui défini le type des props du composant Macaron
 interface IMacaronProps {
   // prop macaronToDisplay
-  macaronToDisplay: { id: number; flavour: string; color: string };
+  macaronToDisplay: IMacaron;
 }
 
 // COMPOSANT

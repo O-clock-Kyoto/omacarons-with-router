@@ -6,15 +6,19 @@ import { Moon, Sun } from 'react-feather';
 // import du style du composant Footer
 import './Footer.scss';
 
+// import du type defini dans @types
+import type IMacaron from '../@types/macaron';
+
 // TYPAGE des props
 interface IFooterProps {
-  nbMacarons: number;
+  // un tableau d'objets
+  macaronList: IMacaron[];
   isDark: boolean;
   // setDark est une fonction créé et renvoyée par useState, pour connaitre son type on passe la souris au dessus du nm de la fonction et on copie colle le type
   setDark: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function Footer({ nbMacarons, isDark, setDark }: IFooterProps) {
+function Footer({ macaronList, isDark, setDark }: IFooterProps) {
   // STATE pour stocker le compteur du footer
   // c'est un etat local au composant footer
   // si il est modifier il n'y a que footer qui refait son rendu
@@ -58,7 +62,7 @@ function Footer({ nbMacarons, isDark, setDark }: IFooterProps) {
       >
         reset
       </button>
-      <p>{nbMacarons} macarons dispos</p>
+      <p>{macaronList.length} macarons dispos</p>
       <button
         className="darkmode"
         type="button"

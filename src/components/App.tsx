@@ -39,7 +39,7 @@ function App() {
       <Footer
         /* on met le footer qui est dans un sous composant 
         on envoie à Footer : le nombre de macarons dans une props appelée nbMacarons et la valeur du state isDark dan sune props appelée isDark  et le setter dans une prop appelée setDark */
-        nbMacarons={macaronList.length}
+        macaronList={macaronList}
         isDark={isDark}
         setDark={setDark}
       />

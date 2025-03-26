@@ -22,7 +22,7 @@ function Footer({ macaronList, isDark, setDark }: IFooterProps) {
   // STATE pour stocker le compteur du footer
   // c'est un etat local au composant footer
   // si il est modifier il n'y a que footer qui refait son rendu
-  const [count, setCount] = useState(60);
+  const [count, setCount] = useState(0);
 
   // return juste le JSX du footer
   return (
@@ -40,6 +40,9 @@ function Footer({ macaronList, isDark, setDark }: IFooterProps) {
           // ATTENTION on ne doit jamais modifier le state directement
           // count = count + 1 --> INTERDIT !!!
           setCount(count + 1);
+
+          // si je log ici le count il sera tjs à zéro: le setter ne change pas tout de suite la valeur du state mais il le changera que dans la prochaine execution du composant
+          console.log(count);
         }}
         type="button"
       >

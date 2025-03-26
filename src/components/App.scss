@@ -28,6 +28,23 @@
   gap: 1rem;
 }
 
+.form {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+
+  &__input {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+  }
+
+  &__btn {
+    border-radius: 0.5rem;
+    border: none;
+  }
+}
+
 
 .darkmode {
   border: none;

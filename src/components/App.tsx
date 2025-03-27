@@ -30,16 +30,16 @@ function App() {
   // SSoT : le state est la seule source de vérité donc on veut que le state "pilote" l'input, on va fair eun input controlé par le state
   const [searchString, setSearchString] = useState('');
 
-  // la callback qu'on file à useEffect sera executée après chaque rendu : le mount (le premier) et tous les updates !
+  // EFFET executée après chaque rendu : le mount (le premier) et tous les updates !
   useEffect(() => {
     // ici le code à executer APRES le rendu quand le JSX est reconcilié avec le DOM
     console.log('effet executé après le mount ET les updates');
     // ici on pourrait executer tout code qui ne concerne pas la construction du JSX :
   });
 
-  // si on ajoute un deuxieme argument à useEffect on peut paramètrer le moment d'execution de la callback, on peut dire qu'elle doit s'executer QUE après le premier rendu (pas après les updates), on file un tableau vide en deuxieme argument
+  // EFFET executé QUE après le premier rendu (pas après les updates) : tableau vide en deuxieme argument
   useEffect(
-    // la callback avec le code de l'effet
+    // - premier argument : la callback avec le code de l'effet
     () => {
       console.log('effet executé après le mount');
       // ici on pourrait executer tout code qui ne concerne pas la construction du JSX :
@@ -52,20 +52,18 @@ function App() {
       // - se connecter à un serveur websocket
       // .... etc
     },
-    // deuxieme argument tableau de deps vide
+    // - deuxieme argument : tableau de deps vide
     [],
   );
 
-  // si on met une variable dans le tableau de dependance, la callback va s'executer au premier rendu (mount) ET à chaque fois que la variable change
+  // EFFET executé au premier rendu (mount) ET à chaque fois que la dep change : tableau avec dep dedans
   useEffect(
+    // - premier argument : la callback avec le code de l'effet
     () => {
-      // code de l'effet
-      // on veut changer le titre de l'onglet à chaque fois que le isDark change
-      console.log('on change le titre');
-
+      // on change le titre de l'onglet de la page si isDark change
       document.title = `OMacarons - ${isDark ? 'dark' : 'light'}`;
     },
-    // execute la callback au premier rendu et si isDark change !
+    // deuxieme argument : tableau de dependance avec isDark
     [isDark],
   );
 

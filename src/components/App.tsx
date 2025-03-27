@@ -15,6 +15,9 @@ import Footer from './Footer';
 // import du style du composant App
 import './App.scss';
 
+// import du type IMacaron pour typer le state qui stocke le tableau des macarons
+import type IMacaron from '../@types/macaron';
+
 // COMPOSANT : un composant est une fonction qui return du JSX
 // on met une majuscule au debut du nom de la fonction composant
 function App() {
@@ -28,17 +31,20 @@ function App() {
   // STATE pour stocker les macarons, valeur initiale, le tableau des data
   // ce tableau du state est utilisé pour le map pour afficher les macarons dans le JSX
   // quand on va valider le form, on va ajouter une entrée dans le tableau et le composant va refaire son rendu ave cun macarons de plus !
-  const [macaronList, setMacaronList] = useState([]);
-  // STATE pour stocker l'état de loading des données macarons si il est à true le loader sera affiché
+  // attention useState "type" l'emplacemennt de state avec la valeur initiale, ici la valeur initiale c'est un tableau vide donc il croit que ça sera tjs un tableau vide
+  // dans ce cas il faut dire à useState que le type du state n'est pas celui de la valeur initiale et on va le lui donner en généric entre chevrons comme ceci : <IMacaron[]>
+  const [macaronList, setMacaronList] = useState<IMacaron[]>([]);
+  // STATE pour stocker l'état de loading des données macarons
   const [isLoading, setIsLoading] = useState(true);
   // STATE pour stocker l'eventuelle erreur
   const [errorMessage, setErrorMessage] = useState('');
 
-  // STATE pour stocker la valeur de l'input filter search, l'affiochage va s'adapter à chaque fois que la valeur change on va filtrer les macarons affichés
-  // SSoT : le state est la seule source de vérité donc on veut que le state "pilote" l'input, on va fair eun input controlé par le state
+  // STATE pour stocker la valeur de l'input filter search, l'affichage va s'adapter à chaque fois que la valeur change on va filtrer les macarons affichés
+  // SSoT : le state est la seule source de vérité donc on veut que le state "pilote" l'input, on a un input controlé par le state
   const [searchString, setSearchString] = useState('');
 
   // call API avec fetch (non utilisé car on finalement on utilsie axios ;)
+  // biome-ignore lint/correctness/noUnusedVariables: <la fonction n'est pas utilisée mais je la laisse pour exemple de cours>
   const getMacaronsAvecFetch = async () => {
     try {
       const response = await fetch(
@@ -63,7 +69,7 @@ function App() {
       try {
         // on va fetch avec une lib axios qu'il faut installer : "pnpm i axios"
         const response = await axios.get(
-          'https://oclock-api.vercel.app/api/macaronss',
+          'https://oclock-api.vercel.app/api/macarons',
         );
         // on a direct les données dans la propriété data de l'objet reçu
         // TJS loguer les données reçues d'une API pour voir la structure

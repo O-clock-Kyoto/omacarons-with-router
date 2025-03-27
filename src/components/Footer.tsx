@@ -22,6 +22,7 @@ function Footer({ macaronList, isDark, setDark }: IFooterProps) {
   // STATE pour stocker le compteur du footer
   // c'est un etat local au composant footer
   // si il est modifier il n'y a que footer qui refait son rendu
+  // au debut il vaut null et après y'aura un number , on doit alors le prééciser avec un généric
   const [count, setCount] = useState(0);
 
   // return juste le JSX du footer

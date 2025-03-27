@@ -31,6 +31,8 @@ function App() {
   const [macaronList, setMacaronList] = useState([]);
   // STATE pour stocker l'état de loading des données macarons si il est à true le loader sera affiché
   const [isLoading, setIsLoading] = useState(true);
+  // STATE pour stocker l'eventuelle erreur
+  const [errorMessage, setErrorMessage] = useState('');
 
   // STATE pour stocker la valeur de l'input filter search, l'affiochage va s'adapter à chaque fois que la valeur change on va filtrer les macarons affichés
   // SSoT : le state est la seule source de vérité donc on veut que le state "pilote" l'input, on va fair eun input controlé par le state
@@ -56,10 +58,12 @@ function App() {
   // EFFET qui sera executé que au premier rendu
   useEffect(() => {
     const getMacaronsAvecAxios = async () => {
+      // on enleve la potentielle erreur
+      setErrorMessage('');
       try {
         // on va fetch avec une lib axios qu'il faut installer : "pnpm i axios"
         const response = await axios.get(
-          'https://oclock-api.vercel.app/api/macaronnnnnnnnns',
+          'https://oclock-api.vercel.app/api/macaronss',
         );
         // on a direct les données dans la propriété data de l'objet reçu
         // TJS loguer les données reçues d'une API pour voir la structure
@@ -68,6 +72,9 @@ function App() {
         // on a les données on va en faire quoi ???? -> les enregistrer dans le state !
         setMacaronList(response.data);
       } catch (e) {
+        // si y'a une erreur on l'enregistre dans le state
+        // on pourrait adapter le message en fonction de l'erreur reçue...
+        setErrorMessage('Erreur de fetch des macarons');
         console.log(e);
       }
       // on a reçu les données on les met dans le state OU on a rien reçu y'a une erreur :
@@ -153,6 +160,7 @@ function App() {
       </form>
 
       <main className="main">
+        {errorMessage && <p>{errorMessage}</p>}
         {isLoading && <div className="loader" />}
         {
           // avec map on fabrique un tableau d'element div JSX

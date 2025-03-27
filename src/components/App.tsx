@@ -36,8 +36,7 @@ function App() {
   // SSoT : le state est la seule source de vérité donc on veut que le state "pilote" l'input, on va fair eun input controlé par le state
   const [searchString, setSearchString] = useState('');
 
-  // call API pour recuperer les macarons mais uniquement au premier rendu et pas les suivant
-  // avec fetch, on envoie une requete GET
+  // call API avec fetch (non utilisé car on finalement on utilsie axios ;)
   const getMacaronsAvecFetch = async () => {
     try {
       const response = await fetch(

@@ -1,5 +1,5 @@
 // import du hook de react pour créer les states
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // import du sous composant Macaron qui affiche un seul macaron
 import Macaron from './Macaron';
@@ -14,6 +14,8 @@ import './App.scss';
 // COMPOSANT : un composant est une fonction qui return du JSX
 // on met une majuscule au debut du nom de la fonction composant
 function App() {
+  console.log('rendu de App');
+
   // STATE qui pilote l'affichage de la classe app--dark dans app
   // mais Footer a besoin de isDark et setIDark car le bouton qui modifie le state est dans Footer
   // c'est un etat partagé car on fait passer sa valeur ou son setter à un sous composant
@@ -26,7 +28,46 @@ function App() {
 
   // STATE pour stocker la valeur de l'input filter search, l'affiochage va s'adapter à chaque fois que la valeur change on va filtrer les macarons affichés
   // SSoT : le state est la seule source de vérité donc on veut que le state "pilote" l'input, on va fair eun input controlé par le state
-  const [searchString, setSearchString] = useState('choc');
+  const [searchString, setSearchString] = useState('');
+
+  // la callback qu'on file à useEffect sera executée après chaque rendu : le mount (le premier) et tous les updates !
+  useEffect(() => {
+    // ici le code à executer APRES le rendu quand le JSX est reconcilié avec le DOM
+    console.log('effet executé après le mount ET les updates');
+    // ici on pourrait executer tout code qui ne concerne pas la construction du JSX :
+  });
+
+  // si on ajoute un deuxieme argument à useEffect on peut paramètrer le moment d'execution de la callback, on peut dire qu'elle doit s'executer QUE après le premier rendu (pas après les updates), on file un tableau vide en deuxieme argument
+  useEffect(
+    // la callback avec le code de l'effet
+    () => {
+      console.log('effet executé après le mount');
+      // ici on pourrait executer tout code qui ne concerne pas la construction du JSX :
+      // on veut garde run composant PURE donc pas d'effets de bord dan sle code du composant, les effets de bord ça va dans le useEffect !
+      // - agir sur le DOM quand il est pret
+      // - modifier le titre de l'onglet (hors scope JSX)
+      // - enregistrer dans un fichier de log le fait que le user a chargé ma page
+      // - envoyer un mail
+      // - faire un call api pour recuperer au sauvegarder des données
+      // - se connecter à un serveur websocket
+      // .... etc
+    },
+    // deuxieme argument tableau de deps vide
+    [],
+  );
+
+  // si on met une variable dans le tableau de dependance, la callback va s'executer au premier rendu (mount) ET à chaque fois que la variable change
+  useEffect(
+    () => {
+      // code de l'effet
+      // on veut changer le titre de l'onglet à chaque fois que le isDark change
+      console.log('on change le titre');
+
+      document.title = `OMacarons - ${isDark ? 'dark' : 'light'}`;
+    },
+    // execute la callback au premier rendu et si isDark change !
+    [isDark],
+  );
 
   // on se sert de la vameur de searchString pour filtrer le tableau macaronList
   const filteredMacarons = macaronList.filter((macaron) => {
@@ -36,6 +77,14 @@ function App() {
     // est ce que la search string est inclue dans le nom du parfum
     return macaron.flavour.includes(searchString);
   });
+
+  // attention si on "sort" le handler du JSX l'event n'est plus automatiquement typé donc il faut l'expliciter !
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    // on change le state, ce qui va changer la value puisque la value c'est ce qu'il y a dans le state
+    // on va recuperer la chaine de caractère tapée par l'utilisateur dans l'event change
+    const newText = event.currentTarget.value;
+    setSearchString(newText);
+  }
 
   return (
     <div className={isDark ? 'app app--dark' : 'app'}>
@@ -47,20 +96,14 @@ function App() {
 
       <form className="form">
         <input
+          id="search-input"
           className="form__input"
           type="text"
           placeholder="search...."
           // controle en lecture, l'utilisateur "lit" le state dans l'input
           value={searchString}
           // controle en ecriture : quand l'utilisateur tape un caractère dans l'input on va ecrire ce caractère dans le state
-          onChange={(event) => {
-            console.log('change!');
-            // on change le state, ce qui va changer la value puisque la value c'est ce qu'il y a dans le state
-            // on va recuperer la chaine de caractère tapée par l'utilisateur dans l'event change
-            const newText = event.currentTarget.value;
-            console.log(newText);
-            setSearchString(newText);
-          }}
+          onChange={handleChange}
         />
       </form>
 

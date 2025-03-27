@@ -1,12 +1,16 @@
 // import du hook de react pour créer les states
 import { useEffect, useState } from 'react';
 
+// import de la lib axios qu'on a installé avec 'pnpm i axios' qui va servir à faire des fetch (si vous preferez ne pas l'utiliser et faire des fetch natif vous pouvez !)
+import axios from 'axios';
+
 // import du sous composant Macaron qui affiche un seul macaron
 import Macaron from './Macaron';
 import Footer from './Footer';
 
 // import du tableau de données : on va devoir le placer dans un state, car on veut qu'il evolue et que l'affichage evolue avec lui !!!
-import data from '../data/macarons';
+// on va aller les chercher sur une API
+// import data from '../data/macarons';
 
 // import du style du composant App
 import './App.scss';
@@ -24,11 +28,55 @@ function App() {
   // STATE pour stocker les macarons, valeur initiale, le tableau des data
   // ce tableau du state est utilisé pour le map pour afficher les macarons dans le JSX
   // quand on va valider le form, on va ajouter une entrée dans le tableau et le composant va refaire son rendu ave cun macarons de plus !
-  const [macaronList, setMacaronList] = useState(data);
+  const [macaronList, setMacaronList] = useState([]);
+  // STATE pour stocker l'état de loading des données macarons si il est à true le loader sera affiché
+  const [isLoading, setIsLoading] = useState(true);
 
   // STATE pour stocker la valeur de l'input filter search, l'affiochage va s'adapter à chaque fois que la valeur change on va filtrer les macarons affichés
   // SSoT : le state est la seule source de vérité donc on veut que le state "pilote" l'input, on va fair eun input controlé par le state
   const [searchString, setSearchString] = useState('');
+
+  // call API pour recuperer les macarons mais uniquement au premier rendu et pas les suivant
+  // avec fetch, on envoie une requete GET
+  const getMacaronsAvecFetch = async () => {
+    try {
+      const response = await fetch(
+        'https://oclock-api.vercel.app/api/macaronnnnns',
+      );
+      if (!response.ok) {
+        // de base fetch ne throw pas d'erreur si la response est 404 donc on le fait à la main
+        throw new Error('404');
+      }
+      const datas = await response.json();
+      console.log(datas);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  // EFFET qui sera executé que au premier rendu
+  useEffect(() => {
+    const getMacaronsAvecAxios = async () => {
+      try {
+        // on va fetch avec une lib axios qu'il faut installer : "pnpm i axios"
+        const response = await axios.get(
+          'https://oclock-api.vercel.app/api/macaronnnnnnnnns',
+        );
+        // on a direct les données dans la propriété data de l'objet reçu
+        // TJS loguer les données reçues d'une API pour voir la structure
+        console.log(response.data);
+
+        // on a les données on va en faire quoi ???? -> les enregistrer dans le state !
+        setMacaronList(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+      // on a reçu les données on les met dans le state OU on a rien reçu y'a une erreur :
+      // on passe l'etat à false pour cacher le loader !
+      setIsLoading(false);
+    };
+    getMacaronsAvecAxios();
+  }, []);
 
   // EFFET executée après chaque rendu : le mount (le premier) et tous les updates !
   useEffect(() => {
@@ -106,6 +154,7 @@ function App() {
       </form>
 
       <main className="main">
+        {isLoading && <div className="loader" />}
         {
           // avec map on fabrique un tableau d'element div JSX
           // à partir du tableau filtré par la search string, on n'affiche pas TOUS les macarons, on affiche que ceux qui sont dans le tableau filtré
